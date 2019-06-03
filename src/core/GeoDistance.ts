@@ -1,8 +1,9 @@
-import { degreesToRadians, lengthToDegrees, lengthToRadians, radiansToDegrees, radiansToLength } from '@turf/helpers';
 import { distance } from '@turf/turf';
 import _ from 'lodash';
 import { NumericalSystem, NumericalUnits } from '../types';
 import GeoCoordinate from './GeoCoordinate';
+
+const EARTH_RADIUS_IN_METERS = 6378000;
 
 export default class GeoDistance {
   static between(coord1: GeoCoordinate, coord2: GeoCoordinate): GeoDistance {
@@ -48,8 +49,8 @@ export default class GeoDistance {
       this.nauticalMiles = value * 0.53995680;
       this.yards = value * 1093.6133;
       this.inches = value * 39370.079;
-      this.degrees = lengthToDegrees(value, 'kilometers');
-      this.radians = lengthToRadians(value, 'kilometers');
+      this.degrees = value * EARTH_RADIUS_IN_METERS * 180 / Math.PI;
+      this.radians = value * EARTH_RADIUS_IN_METERS;
     case 'miles':
       this.meters = value * 1609.344;
       this.kilometers = value * 1.609344;
@@ -57,8 +58,8 @@ export default class GeoDistance {
       this.nauticalMiles = value * 0.86897624;
       this.yards = value * 1760;
       this.inches = value * 63360;
-      this.degrees = lengthToDegrees(value, 'miles');
-      this.radians = lengthToRadians(value, 'miles');
+      this.degrees = value * 1.609344 * EARTH_RADIUS_IN_METERS * 180 / Math.PI;
+      this.radians = value * 1.609344 * EARTH_RADIUS_IN_METERS;
     case 'nauticalmiles':
       this.meters = value * 1852;
       this.kilometers = value * 1.852;
@@ -66,8 +67,8 @@ export default class GeoDistance {
       this.nauticalMiles = value;
       this.yards = value * 2025.3718;
       this.inches = value * 72913.386;
-      this.degrees = lengthToDegrees(value, 'nauticalmiles');
-      this.radians = lengthToRadians(value, 'nauticalmiles');
+      this.degrees = value * 1.852 * EARTH_RADIUS_IN_METERS * 180 / Math.PI;
+      this.radians = value * 1.852 * EARTH_RADIUS_IN_METERS;
     case 'inches':
       this.meters = value * 0.0254;
       this.kilometers = value * 2.54 * 1e-5;
@@ -75,8 +76,8 @@ export default class GeoDistance {
       this.nauticalMiles = value * 1.3714903 * 1e-5;
       this.yards = value * 0.027777778;
       this.inches = value;
-      this.degrees = lengthToDegrees(value, 'inches');
-      this.radians = lengthToRadians(value, 'inches');
+      this.degrees = value * 2.54 * 1e-5 * EARTH_RADIUS_IN_METERS * 180 / Math.PI;
+      this.radians = value * 2.54 * 1e-5 * EARTH_RADIUS_IN_METERS;
     case 'yards':
       this.meters = value * 0.9144;
       this.kilometers = value * 0.0009144;
@@ -84,35 +85,35 @@ export default class GeoDistance {
       this.nauticalMiles = value * 0.00049373650;
       this.yards = value;
       this.inches = value * 36;
-      this.degrees = lengthToDegrees(value, 'yards');
-      this.radians = lengthToRadians(value, 'yards');
+      this.degrees = value * 0.0009144 * EARTH_RADIUS_IN_METERS * 180 / Math.PI;
+      this.radians = value * 0.0009144 * EARTH_RADIUS_IN_METERS;
     case 'radians':
-      this.meters = radiansToLength(value, 'meters');
-      this.kilometers = radiansToLength(value, 'kilometers');
-      this.miles = radiansToLength(value, 'miles');
-      this.nauticalMiles = radiansToLength(value, 'nauticalmiles');
-      this.yards = radiansToLength(value, 'yards');
-      this.inches = radiansToLength(value, 'inches');
-      this.degrees = radiansToDegrees(value);
+      this.meters = value / EARTH_RADIUS_IN_METERS * 1000;
+      this.kilometers = value / EARTH_RADIUS_IN_METERS;
+      this.miles = value / EARTH_RADIUS_IN_METERS * 0.62137119;
+      this.nauticalMiles = value / EARTH_RADIUS_IN_METERS * 0.53995680;
+      this.yards = value / EARTH_RADIUS_IN_METERS * 1093.6133;
+      this.inches = value / EARTH_RADIUS_IN_METERS * 39370.079;
+      this.degrees = value * 180 / Math.PI;
       this.radians = value;
     case 'degrees':
-      this.meters = radiansToLength(degreesToRadians(value), 'meters');
-      this.kilometers = radiansToLength(degreesToRadians(value), 'kilometers');
-      this.miles = radiansToLength(degreesToRadians(value), 'miles');
-      this.nauticalMiles = radiansToLength(degreesToRadians(value), 'nauticalmiles');
-      this.yards = radiansToLength(degreesToRadians(value), 'yards');
-      this.inches = radiansToLength(degreesToRadians(value), 'inches');
+      this.meters = value * Math.PI / 180 / EARTH_RADIUS_IN_METERS * 1000;
+      this.kilometers = value * Math.PI / 180 / EARTH_RADIUS_IN_METERS;
+      this.miles = value * Math.PI / 180 / EARTH_RADIUS_IN_METERS * 0.62137119;
+      this.nauticalMiles = value * Math.PI / 180 / EARTH_RADIUS_IN_METERS * 0.53995680;
+      this.yards = value * Math.PI / 180 / EARTH_RADIUS_IN_METERS * 1093.6133;
+      this.inches = value * Math.PI / 180 / EARTH_RADIUS_IN_METERS * 39370.079;
       this.degrees = value;
-      this.radians = degreesToRadians(value);
+      this.radians = value * Math.PI / 180;
     default:
       this.meters = value;
-      this.kilometers = value / 1000;
+      this.kilometers = value * 0.001;
       this.miles = value * 0.00062137;
       this.nauticalMiles = value * 0.00053995680;
       this.yards = value * 1.0936;
       this.inches = value * 39.370;
-      this.degrees = lengthToDegrees(value, 'meters');
-      this.radians = lengthToRadians(value, 'meters');
+      this.degrees = value * 0.001 * EARTH_RADIUS_IN_METERS * 180 / Math.PI;
+      this.radians = value * 0.001 * EARTH_RADIUS_IN_METERS;
     }
   }
 
