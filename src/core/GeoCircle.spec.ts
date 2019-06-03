@@ -1,13 +1,19 @@
 import { expect } from 'chai';
+import _ from 'lodash';
 import { describe, it } from 'mocha';
 import GeoCircle from './GeoCircle';
 import GeoCoordinate from './GeoCoordinate';
 import GeoDistance from './GeoDistance';
 
 describe('GeoCircle', () => {
-  it('can create a circle', () => {
-    const circle = GeoCircle.make(GeoCoordinate.random(), 10000);
-    expect(circle).to.exist;
+  it('can create a circle 1000x', () => {
+    let count = 0;
+
+    while (count < 1000) {
+      const circle = GeoCircle.make(GeoCoordinate.random(), _.random(0, 10000, true));
+      expect(circle).to.exist;
+      count++;
+    }
   });
 
   it('can compute the minimal enclosing circle of a single circle 1000x', () => {

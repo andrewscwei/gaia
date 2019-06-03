@@ -88,14 +88,19 @@ export default class GeoCircle {
     this.center = center;
     this.radius = radius;
 
-    const circle = turf.circle(turf.point(this.center.toArray()), this.radius.meters, {
-      steps,
-      units: 'meters',
-    });
+    if (this.radius.meters > 0) {
+      const circle = turf.circle(turf.point(this.center.toArray()), this.radius.meters, {
+        steps,
+        units: 'meters',
+      });
 
-    const coords = _.flatten(turf.getCoords(circle));
+      const coords = _.flatten(turf.getCoords(circle));
 
-    this.bounds = coords.map(coord => new GeoCoordinate(coord[0], coord[1]));
+      this.bounds = coords.map(coord => new GeoCoordinate(coord[0], coord[1]));
+    }
+    else {
+      this.bounds = [center];
+    }
   }
 
   toPlainObject(): { center: { longitude: number; latitude: number; }; radius: number; bounds: (number[])[] } {
