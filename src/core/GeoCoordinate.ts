@@ -15,7 +15,7 @@ export default class GeoCoordinate {
     return true;
   }
 
-  static isValidDescriptor(value: any): boolean {
+  static isValidDescriptor<T>(value: T): value is T {
     if (GeoCoordinate.isValid(value)) return true;
 
     if (_.isArray(value)) {

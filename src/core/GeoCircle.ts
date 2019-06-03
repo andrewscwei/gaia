@@ -4,7 +4,7 @@ import GeoCoordinate from './GeoCoordinate';
 import GeoDistance from './GeoDistance';
 
 export default class GeoCircle {
-  static isValidDescriptor(value: any): boolean {
+  static isValidDescriptor<T>(value: T): value is T {
     if (GeoCircle.isValid(value)) return true;
 
     if (_.isPlainObject(value)) {
