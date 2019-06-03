@@ -49,10 +49,10 @@ export default class GeoCircle {
     return GeoCircle.make(center, distance);
   }
 
-  static fromCircles(circles: GeoCircle[]): GeoCircle {
+  static fromCircles(circles: GeoCircle[], steps: number = 64): GeoCircle {
     if (circles.length === 1) return circles[0];
 
-    const coords = _.flatten(circles.map(circle => circle.bounds)).map(coord => coord.toArray());
+    const coords = _.flatten(circles.map(circle => circle.getBounds(steps))).map(coord => coord.toArray());
     const points = coords.map(coord => turf.point(coord));
     const center = GeoCoordinate.make(turf.getCoords(turf.center(turf.featureCollection(points))));
 
@@ -68,7 +68,7 @@ export default class GeoCircle {
     return GeoCircle.make(center, distance);
   }
 
-  static make(center: any, radius: any, steps: number = 64): GeoCircle {
+  static make(center: any, radius: any): GeoCircle {
     const c = GeoCoordinate.make(center);
 
     if (!c) throw new Error(`Unable to determine center coordinate from value ${center}`);
@@ -77,17 +77,34 @@ export default class GeoCircle {
 
     if (!r) throw new Error(`Unable to determine radius from value ${radius}`);
 
-    return new GeoCircle(c, r, steps);
+    return new GeoCircle(c, r);
   }
 
   readonly center: GeoCoordinate;
   readonly radius: GeoDistance;
-  readonly bounds: GeoCoordinate[];
 
-  constructor(center: GeoCoordinate, radius: GeoDistance, steps: number = 64) {
+  constructor(center: GeoCoordinate, radius: GeoDistance) {
     this.center = center;
     this.radius = radius;
+  }
 
+  isInsideGeoJson(...geoJsons: turf.AllGeoJSON[]): boolean {
+    const selfGeoJson = this.toGeoJson();
+
+    for (const geoJson of geoJsons) {
+      const featureCollection = turf.flatten(geoJson);
+
+      for (const feature of featureCollection.features) {
+        if (turf.booleanWithin(selfGeoJson, feature)) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  getBounds(steps: number = 64): GeoCoordinate[] {
     if (this.radius.meters > 0) {
       const circle = turf.circle(turf.point(this.center.toArray()), this.radius.meters, {
         steps,
@@ -96,18 +113,21 @@ export default class GeoCircle {
 
       const coords = _.flatten(turf.getCoords(circle));
 
-      this.bounds = coords.map(coord => new GeoCoordinate(coord[0], coord[1]));
+      return coords.map(coord => new GeoCoordinate(coord[0], coord[1]));
     }
     else {
-      this.bounds = [center];
+      return [this.center];
     }
   }
 
-  toPlainObject(): { center: { longitude: number; latitude: number; }; radius: number; bounds: (number[])[] } {
+  toPlainObject(): { center: { longitude: number; latitude: number; }; radius: number; } {
     return {
       center: this.center.toPlainObject(),
       radius: this.radius.meters,
-      bounds: this.bounds.map(coord => coord.toArray()),
     };
+  }
+
+  toGeoJson(steps: number = 64) {
+    return turf.circle(turf.point(this.center.toArray()), this.radius.meters, { steps, units: 'meters' });
   }
 }

@@ -117,13 +117,13 @@ export default class GeoCoordinate {
   }
 
   isInsideGeoJson(...geoJsons: turf.AllGeoJSON[]): boolean {
-    const point = turf.point(this.toArray());
+    const selfGeoJson = this.toGeoJson();
 
     for (const geoJson of geoJsons) {
       const featureCollection = turf.flatten(geoJson);
 
       for (const feature of featureCollection.features) {
-        if (turf.booleanPointInPolygon(point, feature)) {
+        if (turf.booleanWithin(selfGeoJson, feature)) {
           return true;
         }
       }
@@ -145,5 +145,9 @@ export default class GeoCoordinate {
       longitude: this.longitude,
       latitude: this.latitude,
     };
+  }
+
+  toGeoJson() {
+    return turf.point(this.toArray());
   }
 }

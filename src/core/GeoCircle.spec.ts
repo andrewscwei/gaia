@@ -36,16 +36,13 @@ describe('GeoCircle', () => {
     let count = 0;
 
     while (count < 1000) {
-      const circles = [];
-
-      for (let i = 0; i < 10; i++) {
-        const center = GeoCoordinate.random();
-        const radius = GeoDistance.random(0, 10000);
-        const circle = GeoCircle.make(center, radius);
-        circles.push(circle);
-      }
-
+      const circles = _.range(10).map(() => GeoCircle.make(GeoCoordinate.random(), GeoDistance.random(0, 10000)));
       const mec = GeoCircle.fromCircles(circles);
+      const mecGeoJson = mec.toGeoJson();
+
+      for (const circle of circles) {
+        expect(circle.isInsideGeoJson(mecGeoJson));
+      }
 
       count++;
     }
