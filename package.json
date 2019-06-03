@@ -1,10 +1,9 @@
 {
   "name": "@andrewscwei/gaia",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Geospatial utility functions for Node.js, powered by Turf.js",
   "main": "build/index.js",
   "scripts": {
-    "prepare": "npm run build",
     "clean": "rimraf build",
     "build": "npm run clean && tsc",
     "test": "DEBUG=gaia* mocha --timeout 20000 --reporter spec --full-trace --colors --recursive --exit build/**/*.spec.js",
