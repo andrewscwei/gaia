@@ -112,8 +112,8 @@ export default class GeoDistance {
       this.nauticalMiles = value * 0.00053995680;
       this.yards = value * 1.0936;
       this.inches = value * 39.370;
-      this.degrees = value * 0.001 * EARTH_RADIUS_IN_METERS * 180 / Math.PI;
-      this.radians = value * 0.001 * EARTH_RADIUS_IN_METERS;
+      this.degrees = (value / EARTH_RADIUS_IN_METERS) * (180 / Math.PI);
+      this.radians = value / EARTH_RADIUS_IN_METERS;
     }
   }
 
