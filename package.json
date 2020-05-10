@@ -1,6 +1,6 @@
 {
   "name": "@andrewscwei/gaia",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "description": "Geospatial utility functions for Node.js, powered by Turf.js",
   "main": "build/index.js",
   "scripts": {
@@ -27,14 +27,14 @@
   "devDependencies": {
     "@turf/turf": "^5.1.6",
     "@types/chai": "^4.2.11",
-    "@types/lodash": "^4.14.149",
+    "@types/lodash": "^4.14.150",
     "@types/mocha": "^7.0.2",
-    "@types/node": "^13.11.0",
+    "@types/node": "^13.13.5",
     "chai": "^4.2.0",
-    "mocha": "^7.1.1",
+    "mocha": "^7.1.2",
     "rimraf": "^3.0.2",
-    "ts-node": "^8.8.2",
-    "tslint": "^6.1.1",
+    "ts-node": "^8.10.1",
+    "tslint": "^6.1.2",
     "typescript": "^3.8.3"
   },
   "dependencies": {
