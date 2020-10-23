@@ -4,12 +4,20 @@ import GeoCoordinate from './GeoCoordinate';
 import GeoDistance from './GeoDistance';
 
 export default class GeoCircle {
+  readonly center: GeoCoordinate;
+  readonly radius: GeoDistance;
+
+  constructor(center: GeoCoordinate, radius: GeoDistance) {
+    this.center = center;
+    this.radius = radius;
+  }
+
   static isValidDescriptor<T>(value: T): value is NonNullable<T> {
     if (GeoCircle.isValid(value)) return true;
 
     if (_.isPlainObject(value)) {
       try {
-        const circle = GeoCircle.fromPlainObject(value);
+        GeoCircle.fromPlainObject(value);
         return true;
       }
       catch (err) {
@@ -49,7 +57,7 @@ export default class GeoCircle {
     return GeoCircle.make(center, distance);
   }
 
-  static fromCircles(circles: GeoCircle[], steps: number = 64): GeoCircle {
+  static fromCircles(circles: GeoCircle[], steps = 64): GeoCircle {
     if (circles.length === 1) return circles[0];
 
     const coords = _.flatten(circles.map(circle => circle.getBounds(steps))).map(coord => coord.toArray());
@@ -80,14 +88,6 @@ export default class GeoCircle {
     return new GeoCircle(c, r);
   }
 
-  readonly center: GeoCoordinate;
-  readonly radius: GeoDistance;
-
-  constructor(center: GeoCoordinate, radius: GeoDistance) {
-    this.center = center;
-    this.radius = radius;
-  }
-
   isInsideGeoJson(...geoJsons: turf.AllGeoJSON[]): boolean {
     const selfGeoJson = this.toGeoJson();
 
@@ -104,7 +104,7 @@ export default class GeoCircle {
     return false;
   }
 
-  getBounds(steps: number = 64): GeoCoordinate[] {
+  getBounds(steps = 64): GeoCoordinate[] {
     if (this.radius.meters > 0) {
       const circle = turf.circle(turf.point(this.center.toArray()), this.radius.meters, {
         steps,
@@ -120,14 +120,14 @@ export default class GeoCircle {
     }
   }
 
-  toPlainObject(): { center: { longitude: number; latitude: number; }; radius: number; } {
+  toPlainObject(): { center: { longitude: number; latitude: number }; radius: number } {
     return {
       center: this.center.toPlainObject(),
       radius: this.radius.meters,
     };
   }
 
-  toGeoJson(steps: number = 64) {
+  toGeoJson(steps = 64) {
     return turf.circle(turf.point(this.center.toArray()), this.radius.meters, { steps, units: 'meters' });
   }
 }

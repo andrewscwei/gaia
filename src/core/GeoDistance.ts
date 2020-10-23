@@ -6,30 +6,6 @@ import GeoCoordinate from './GeoCoordinate';
 const EARTH_RADIUS_IN_METERS = 6378000;
 
 export default class GeoDistance {
-  static between(coord1: GeoCoordinate, coord2: GeoCoordinate): GeoDistance {
-    const units = 'meters';
-    return new GeoDistance(distance(coord1.toArray(), coord2.toArray(), { units }), units);
-  }
-
-  static random(from: number, to: number, units: NumericalUnits = 'meters'): GeoDistance {
-    return new GeoDistance(_.random(from, to, true), units);
-  }
-
-  static make(value: any, units: NumericalUnits = 'meters'): GeoDistance {
-    if (_.isNumber(value)) return new GeoDistance(value, units);
-    if (value instanceof GeoDistance) return new GeoDistance(value.meters, 'meters');
-
-    if (_.isString(value)) {
-      const float = parseFloat(value);
-
-      if (isNaN(float)) throw new Error(`Unable to create a new Distance instance from value ${float}`);
-
-      return new GeoDistance(float, units);
-    }
-
-    throw new Error(`Unsupported value ${value}`);
-  }
-
   readonly meters: number;
   readonly kilometers: number;
   readonly miles: number;
@@ -115,6 +91,30 @@ export default class GeoDistance {
       this.degrees = (value / EARTH_RADIUS_IN_METERS) * (180 / Math.PI);
       this.radians = value / EARTH_RADIUS_IN_METERS;
     }
+  }
+
+  static between(coord1: GeoCoordinate, coord2: GeoCoordinate): GeoDistance {
+    const units = 'meters';
+    return new GeoDistance(distance(coord1.toArray(), coord2.toArray(), { units }), units);
+  }
+
+  static random(from: number, to: number, units: NumericalUnits = 'meters'): GeoDistance {
+    return new GeoDistance(_.random(from, to, true), units);
+  }
+
+  static make(value: any, units: NumericalUnits = 'meters'): GeoDistance {
+    if (_.isNumber(value)) return new GeoDistance(value, units);
+    if (value instanceof GeoDistance) return new GeoDistance(value.meters, 'meters');
+
+    if (_.isString(value)) {
+      const float = parseFloat(value);
+
+      if (isNaN(float)) throw new Error(`Unable to create a new Distance instance from value ${float}`);
+
+      return new GeoDistance(float, units);
+    }
+
+    throw new Error(`Unsupported value ${value}`);
   }
 
   toString(system: NumericalSystem = 'metric'): string {

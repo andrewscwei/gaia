@@ -3,6 +3,14 @@ import _ from 'lodash';
 import GeoDistance from './GeoDistance';
 
 export default class GeoCoordinate {
+  readonly longitude: number;
+  readonly latitude: number;
+
+  constructor(longitude: number, latitude: number) {
+    this.longitude = GeoCoordinate.normalizeLongitude(longitude);
+    this.latitude = GeoCoordinate.normalizeLatitude(latitude);
+  }
+
   static validateLongitude(longitude: number): boolean {
     if (longitude < -180) return false;
     if (longitude > 180) return false;
@@ -20,7 +28,7 @@ export default class GeoCoordinate {
 
     if (_.isArray(value)) {
       try {
-        const coord = GeoCoordinate.fromArray(value);
+        GeoCoordinate.fromArray(value);
         return true;
       }
       catch (err) {
@@ -29,7 +37,7 @@ export default class GeoCoordinate {
     }
     else if (_.isPlainObject(value)) {
       try {
-        const coord = GeoCoordinate.fromPlainObject(value);
+        GeoCoordinate.fromPlainObject(value);
         return true;
       }
       catch (err) {
@@ -70,7 +78,7 @@ export default class GeoCoordinate {
     return new GeoCoordinate(_.random(bounds[0], bounds[2], true), _.random(bounds[1], bounds[3], true));
   }
 
-  static randomFrom(coord: GeoCoordinate, distance: GeoDistance | number, steps: number = 64): GeoCoordinate {
+  static randomFrom(coord: GeoCoordinate, distance: GeoDistance | number, steps = 64): GeoCoordinate {
     const d = _.isNumber(distance) ? new GeoDistance(distance, 'meters') : distance;
     const circle = turf.circle(turf.point(coord.toArray()), d.meters, { steps, units: 'meters' });
     const coords = _.flatten(turf.getCoords(circle));
@@ -108,14 +116,6 @@ export default class GeoCoordinate {
     throw new Error(`Unable to make GeoCoordinate instance from value ${value}`);
   }
 
-  readonly longitude: number;
-  readonly latitude: number;
-
-  constructor(longitude: number, latitude: number) {
-    this.longitude = GeoCoordinate.normalizeLongitude(longitude);
-    this.latitude = GeoCoordinate.normalizeLatitude(latitude);
-  }
-
   isInsideGeoJson(...geoJsons: turf.AllGeoJSON[]): boolean {
     const selfGeoJson = this.toGeoJson();
 
@@ -140,7 +140,7 @@ export default class GeoCoordinate {
     return [this.longitude, this.latitude];
   }
 
-  toPlainObject(): { longitude: number; latitude: number; } {
+  toPlainObject(): { longitude: number; latitude: number } {
     return {
       longitude: this.longitude,
       latitude: this.latitude,
