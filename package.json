@@ -1,6 +1,6 @@
 {
   "name": "@andrewscwei/gaia",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "description": "Geospatial utility functions for Node.js, powered by Turf.js",
   "main": "build/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "npm run clean && tsc",
     "test": "DEBUG=gaia* mocha --timeout 20000 --reporter spec --full-trace --colors --recursive --exit build/**/*.spec.js",
     "test:ts": "DEBUG=gaia* mocha -r ts-node/register --timeout 20000 --reporter spec --full-trace --colors --recursive --exit src/**/*.spec.ts",
-    "lint": "eslint --ext .ts --ignore-pattern *.spec.ts src",
+    "lint": "eslint --ext .ts src",
     "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
@@ -30,8 +30,8 @@
     "@types/lodash": "^4.14.170",
     "@types/mocha": "^8.2.2",
     "@types/node": "^16.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.28.1",
-    "@typescript-eslint/parser": "^4.28.1",
+    "@typescript-eslint/eslint-plugin": "^4.28.2",
+    "@typescript-eslint/parser": "^4.28.2",
     "chai": "^4.3.4",
     "eslint": "^7.30.0",
     "mocha": "^9.0.2",
