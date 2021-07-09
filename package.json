@@ -1,6 +1,6 @@
 {
   "name": "@andrewscwei/gaia",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "Geospatial utility functions for Node.js, powered by Turf.js",
   "main": "build/index.js",
   "scripts": {
@@ -26,10 +26,10 @@
   "homepage": "https://github.com/andrewscwei/gaia#readme",
   "devDependencies": {
     "@turf/turf": "^6.4.0",
-    "@types/chai": "^4.2.19",
-    "@types/lodash": "^4.14.170",
-    "@types/mocha": "^8.2.2",
-    "@types/node": "^16.0.0",
+    "@types/chai": "^4.2.21",
+    "@types/lodash": "^4.14.171",
+    "@types/mocha": "^8.2.3",
+    "@types/node": "^16.3.0",
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
     "chai": "^4.3.4",
