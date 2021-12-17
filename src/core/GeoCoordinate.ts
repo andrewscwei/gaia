@@ -136,7 +136,12 @@ export default class GeoCoordinate {
     return `[${this.longitude},${this.latitude}]`
   }
 
-  toArray(): number[] {
+  /**
+   * Converts this coordinate to an array in the format of `[longitude, latitude]`.
+   *
+   * @returns The coordinate in array format (`[longitude, latitude]`).
+   */
+  toArray(): [number, number] {
     return [this.longitude, this.latitude]
   }
 

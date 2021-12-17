@@ -5,9 +5,11 @@
   "main": "build/index.js",
   "scripts": {
     "clean": "rimraf build",
+    "prebuild": "npm run lint",
     "build": "npm run clean && tsc",
-    "test": "DEBUG=gaia* mocha --timeout 20000 --reporter spec --full-trace --colors --recursive --exit build/**/*.spec.js",
-    "test:ts": "DEBUG=gaia* mocha -r ts-node/register --timeout 20000 --reporter spec --full-trace --colors --recursive --exit src/**/*.spec.ts",
+    "build:test": "npm run build -- --project tsconfig.test.json",
+    "test": "mocha --timeout 10000 --reporter spec --full-trace --colors --exit \"build/**/*.spec.js\"",
+    "test:ts": "cross-env DEBUG=gaia* NODE_ENV=development mocha -r ts-node/register --timeout 10000 --reporter spec --full-trace --colors --exit \"src/**/*.spec.ts\"",
     "lint": "eslint --ext .ts src",
     "lint:fix": "npm run lint -- --fix"
   },
@@ -24,6 +26,7 @@
     "url": "https://github.com/andrewscwei/gaia/issues"
   },
   "homepage": "https://github.com/andrewscwei/gaia#readme",
+  "types": "build/index.d.ts",
   "devDependencies": {
     "@turf/turf": "^6.4.0",
     "@types/chai": "^4.2.21",
@@ -33,6 +36,7 @@
     "@typescript-eslint/eslint-plugin": "^4.28.2",
     "@typescript-eslint/parser": "^4.28.2",
     "chai": "^4.3.4",
+    "cross-env": "^7.0.3",
     "eslint": "^7.30.0",
     "mocha": "^9.0.2",
     "rimraf": "^3.0.2",
@@ -47,6 +51,5 @@
   },
   "peerDependencies": {
     "@turf/turf": "^6.4.0"
-  },
-  "types": "build/index.d.ts"
+  }
 }
