@@ -35,7 +35,7 @@ export default class GeoCoordinate {
         return false
       }
     }
-    else if (_.isPlainObject(value)) {
+    else if (_.isObject(value)) {
       try {
         GeoCoordinate.fromPlainObject(value)
         return true

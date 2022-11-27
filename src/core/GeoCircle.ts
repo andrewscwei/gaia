@@ -15,7 +15,7 @@ export default class GeoCircle {
   static isValidDescriptor<T>(value: T): value is NonNullable<T> {
     if (GeoCircle.isValid(value)) return true
 
-    if (_.isPlainObject(value)) {
+    if (_.isObject(value)) {
       try {
         GeoCircle.fromPlainObject(value)
         return true
