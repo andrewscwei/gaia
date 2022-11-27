@@ -5,6 +5,7 @@ import GeoDistance from './GeoDistance'
 
 export default class GeoCircle {
   readonly center: GeoCoordinate
+
   readonly radius: GeoDistance
 
   constructor(center: GeoCoordinate, radius: GeoDistance) {
@@ -18,6 +19,7 @@ export default class GeoCircle {
     if (_.isObject(value)) {
       try {
         GeoCircle.fromPlainObject(value)
+
         return true
       }
       catch (err) {
@@ -32,7 +34,7 @@ export default class GeoCircle {
     return value instanceof GeoCircle
   }
 
-  static fromPlainObject(object: { [key: string]: any }): GeoCircle {
+  static fromPlainObject(object: Record<string, any>): GeoCircle {
     const keys = Object.keys(object)
     if (!~keys.indexOf('center')) throw new Error('Plain object is missing `center` key')
     if (!~keys.indexOf('radius')) throw new Error('Plain object is missing `radius` key')

@@ -4,6 +4,7 @@ import GeoDistance from './GeoDistance'
 
 export default class GeoCoordinate {
   readonly longitude: number
+
   readonly latitude: number
 
   constructor(longitude: number, latitude: number) {
@@ -14,12 +15,14 @@ export default class GeoCoordinate {
   static validateLongitude(longitude: number): boolean {
     if (longitude < -180) return false
     if (longitude > 180) return false
+
     return true
   }
 
   static validateLatitude(latitude: number): boolean {
     if (latitude < -90) return false
     if (latitude > 90) return false
+
     return true
   }
 
@@ -29,6 +32,7 @@ export default class GeoCoordinate {
     if (_.isArray(value)) {
       try {
         GeoCoordinate.fromArray(value)
+
         return true
       }
       catch (err) {
@@ -38,6 +42,7 @@ export default class GeoCoordinate {
     else if (_.isObject(value)) {
       try {
         GeoCoordinate.fromPlainObject(value)
+
         return true
       }
       catch (err) {
@@ -91,18 +96,21 @@ export default class GeoCoordinate {
     if (!parsed.startsWith('[')) throw new Error('Invalid string format provided')
     if (!parsed.endsWith(']')) throw new Error('Invalid string format provided')
     const degrees = parsed.substring(1, parsed.length - 1).split(',')
+
     return GeoCoordinate.fromArray(degrees)
   }
 
   static fromArray(arr: any[]): GeoCoordinate {
     if (arr.length !== 2) throw new Error('Array must have exactly 2 items')
+
     return new GeoCoordinate(Number(arr[0]), Number(arr[1]))
   }
 
-  static fromPlainObject(obj: { [key: string]: any }): GeoCoordinate {
+  static fromPlainObject(obj: Record<string, any>): GeoCoordinate {
     const keys = Object.keys(obj)
     if (!~keys.indexOf('longitude')) throw new Error('Plain object is missing `longitude` key')
     if (!~keys.indexOf('latitude')) throw new Error('Plain object is missing `latitude` key')
+
     return new GeoCoordinate(Number(obj.longitude), Number(obj.latitude))
   }
 

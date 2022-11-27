@@ -1,7 +1,8 @@
+import useDebug from 'debug'
 import _ from 'lodash'
 import { GeoCircle, GeoCoordinate } from '../core'
 
-const debug = require('debug')('gaia')
+const debug = useDebug('gaia')
 
 export function printCircleBounds(circle: GeoCircle, stripSymbols = false, useConsole = false) {
   printCoordinates(circle.getBounds(), stripSymbols, useConsole)
