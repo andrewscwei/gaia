@@ -1,9 +1,9 @@
 import { expect } from 'chai'
 import _ from 'lodash'
 import { describe, it } from 'mocha'
-import GeoCircle from './GeoCircle'
-import GeoCoordinate from './GeoCoordinate'
-import GeoDistance from './GeoDistance'
+import { GeoCircle } from './GeoCircle.js'
+import { GeoCoordinate } from './GeoCoordinate.js'
+import { GeoDistance } from './GeoDistance.js'
 
 describe('GeoCircle', () => {
   it('can create a circle 1000x', () => {

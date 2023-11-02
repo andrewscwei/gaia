@@ -1,3 +1,3 @@
-export { default as GeoCircle } from './GeoCircle'
-export { default as GeoCoordinate } from './GeoCoordinate'
-export { default as GeoDistance } from './GeoDistance'
+export * from './GeoCircle.js'
+export * from './GeoCoordinate.js'
+export * from './GeoDistance.js'

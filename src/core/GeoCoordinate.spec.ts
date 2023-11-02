@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 import _ from 'lodash'
 import { describe, it } from 'mocha'
-import GeoCoordinate from './GeoCoordinate'
-import GeoDistance from './GeoDistance'
+import { GeoCoordinate } from './GeoCoordinate.js'
+import { GeoDistance } from './GeoDistance.js'
 
 describe('GeoCoordinate', () => {
   it('can generate a random coordinate', () => {

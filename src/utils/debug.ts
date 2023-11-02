@@ -1,6 +1,6 @@
 import useDebug from 'debug'
 import _ from 'lodash'
-import { GeoCircle, GeoCoordinate } from '../core'
+import { type GeoCircle, type GeoCoordinate } from '../core/index.js'
 
 const debug = useDebug('gaia')
 

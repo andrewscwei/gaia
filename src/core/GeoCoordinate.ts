@@ -1,8 +1,8 @@
 import * as turf from '@turf/turf'
 import _ from 'lodash'
-import GeoDistance from './GeoDistance'
+import { GeoDistance } from './GeoDistance.js'
 
-export default class GeoCoordinate {
+export class GeoCoordinate {
   readonly longitude: number
 
   readonly latitude: number

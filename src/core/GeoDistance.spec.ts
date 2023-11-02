@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 import { describe, it } from 'mocha'
-import GeoDistance from './GeoDistance'
+import { GeoDistance } from './GeoDistance.js'
 
 describe('GeoDistance', () => {
   it('can stringify meters', () => {

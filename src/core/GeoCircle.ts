@@ -1,9 +1,9 @@
 import * as turf from '@turf/turf'
 import _ from 'lodash'
-import GeoCoordinate from './GeoCoordinate'
-import GeoDistance from './GeoDistance'
+import { GeoCoordinate } from './GeoCoordinate.js'
+import { GeoDistance } from './GeoDistance.js'
 
-export default class GeoCircle {
+export class GeoCircle {
   readonly center: GeoCoordinate
 
   readonly radius: GeoDistance

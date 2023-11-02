@@ -1,11 +1,12 @@
 import { distance } from '@turf/turf'
 import _ from 'lodash'
-import { NumericalSystem, NumericalUnits } from '../types'
-import GeoCoordinate from './GeoCoordinate'
+import { type NumericalSystem } from '../types/NumericalSystem.js'
+import { type NumericalUnits } from '../types/NumericalUnits.js'
+import { type GeoCoordinate } from './GeoCoordinate.js'
 
 const EARTH_RADIUS_IN_METERS = 6378000
 
-export default class GeoDistance {
+export class GeoDistance {
   readonly meters: number
 
   readonly kilometers: number
