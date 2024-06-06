@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+
 import { expect } from 'chai'
 import _ from 'lodash'
 import { describe, it } from 'mocha'
