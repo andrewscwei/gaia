@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-
 import { expect } from 'chai'
 import _ from 'lodash'
 import { describe, it } from 'mocha'
@@ -12,8 +10,7 @@ describe('GeoCircle', () => {
     let count = 0
 
     while (count < 1000) {
-      const circle = GeoCircle.make(GeoCoordinate.random(), _.random(0, 10000, true))
-      expect(circle).to.exist
+      GeoCircle.make(GeoCoordinate.random(), _.random(0, 10000, true))
       count++
     }
   })

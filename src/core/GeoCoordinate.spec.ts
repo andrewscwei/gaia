@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-
 import { expect } from 'chai'
 import _ from 'lodash'
 import { describe, it } from 'mocha'
@@ -8,8 +6,7 @@ import { GeoDistance } from './GeoDistance.js'
 
 describe('GeoCoordinate', () => {
   it('can generate a random coordinate', () => {
-    const coord = GeoCoordinate.random()
-    expect(coord).to.exist
+    GeoCoordinate.random()
   })
 
   it('can generate 100 random coordinates from a coordinate', () => {
